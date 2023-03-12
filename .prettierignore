@@ -1,0 +1,8 @@
+# ignore all distribution directory files
+dist
+
+# ignore generated lock file
+package-lock.json
+
+# ignore test coverage
+/coverage

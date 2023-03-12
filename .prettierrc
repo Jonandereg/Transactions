@@ -1,0 +1,12 @@
+{
+  "plugins": ["./node_modules/prettier-plugin-jsdoc", "./node_modules/prettier-plugin-packagejson"],
+  "trailingComma": "es5",
+  "tabWidth": 2,
+  "semi": false,
+  "singleQuote": true,
+  "jsdocPrintWidth": 72,
+  "printWidth": 80,
+  "tsdoc": true,
+  "jsdocSingleLineComment": false,
+  "proseWrap": "always"
+}
