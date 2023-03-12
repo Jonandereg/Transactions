@@ -14,7 +14,7 @@
   "author": "",
   "main": "index.ts",
   "scripts": {
-    "start": "nodemon ./src/index.ts",
+    "start": "npx supabase start && nodemon ./src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
