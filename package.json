@@ -2,22 +2,26 @@
   "name": "transactions",
   "version": "1.0.0",
   "description": "Replicate Problem mentioned in chapter 7 of designing data-intensive apps, and provide solution to it.",
-  "main": "index.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./src/index.ts"
+  "homepage": "https://github.com/Jonandereg/transactions#readme",
+  "bugs": {
+    "url": "https://github.com/Jonandereg/transactions/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Jonandereg/transactions.git"
   },
-  "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Jonandereg/transactions/issues"
+  "author": "",
+  "main": "index.ts",
+  "scripts": {
+    "start": "nodemon ./src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "homepage": "https://github.com/Jonandereg/transactions#readme",
+  "dependencies": {
+    "pg": "^8.9.0"
+  },
   "devDependencies": {
+    "@types/pg": "^8.6.6",
     "@typescript-eslint/eslint-plugin": "^5.54.1",
     "@typescript-eslint/parser": "^5.54.1",
     "eslint": "^8.32.0",
@@ -34,11 +38,8 @@
     "prettier": "2.8.3",
     "prettier-plugin-jsdoc": "^0.4.2",
     "prettier-plugin-packagejson": "^2.4.3",
-    "supabase": "^1.34.5",
+    "supabase": "^1.42.5",
     "ts-node": "^10.9.1",
     "typescript": "^4.9.5"
-  },
-  "dependencies": {
-    "pg": "^8.9.0"
   }
 }
