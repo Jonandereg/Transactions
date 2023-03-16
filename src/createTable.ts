@@ -7,13 +7,20 @@ const client = new Client({
 const run = async () => {
   await client.connect()
 
-  const response = await client.query(`
-        CREATE TABLE IF NOT EXISTS counter (
-        myCounter SERIAL PRIMARY KEY,
-        count INTEGER NOT NULL
+  const createTable = await client.query(`
+        CREATE TABLE IF NOT EXISTS counters (
+        id SERIAL PRIMARY KEY,
+        value INTEGER NOT NULL
         )
     `)
-  console.log(response)
+  console.log('🚀 ~ file: createTable.ts:16 ~ run ~ createTable:', createTable)
+
+  // add myCounter as Id
+  const addCounter = await client.query(`
+        INSERT INTO counters (id, value) VALUES (1, 0)        
+    `)
+
+  console.log('🚀 ~ file: createTable.ts:23 ~ run ~ addCounter:', addCounter)
   await client.end()
 }
 
