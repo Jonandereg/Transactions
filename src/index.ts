@@ -1,40 +1,65 @@
 import { Client } from 'pg'
 
-const runUser1 = async () => {
-  const client = new Client({
-    connectionString: 'postgresql://postgres:postgres@localhost:54322/postgres',
-  })
-  await client.connect()
-
-  // await client.query(`Begin`) uncomment this line to see the error go away
-  await client.query(`
-  UPDATE counters SET value = value + 1 where id = '1'
-  `)
-
-  setTimeout(async () => {
-    await client.query(`Commit`)
-    await client.end()
-  }, 2000)
-}
-
-const runUser2 = async () => {
-  const client = new Client({
-    connectionString: 'postgresql://postgres:postgres@localhost:54322/postgres',
-  })
-  await client.connect()
-
-  const user2Counter = await client.query(`
-  SELECT value from counters where id = '1'
-    `)
-  console.log(
-    '🚀 ~ file: index.ts:24 ~ runUser2 ~ user2Counter:',
-    user2Counter.rows[0]
-  )
-}
-
 const test = async () => {
-  runUser1()
-  runUser2()
+  resetTable()
+  const client1 = new Client({
+    connectionString: 'postgresql://postgres:postgres@localhost:54322/postgres',
+  })
+  await client1.connect()
+
+  const client2 = new Client({
+    connectionString: 'postgresql://postgres:postgres@localhost:54322/postgres',
+  })
+  await client2.connect()
+
+  //   await client1.query(`Begin`)
+  const user1Val = (
+    await client2.query(`
+      SELECT value from counters where id = '1'
+        `)
+  ).rows[0].value
+
+  const user2Val = (
+    await client2.query(`
+        SELECT value from counters where id = '1'
+        `)
+  ).rows[0].value
+
+  await client1.query(`
+            UPDATE counters SET value = ${user1Val + 1} where id = '1'
+            `)
+  await client2.query(`
+            UPDATE counters SET value = ${user2Val + 1} where id = '1'
+            `)
+
+  const finalVal = await client2.query(`
+            SELECT value from counters where id = '1'
+            `)
+  console.log('🚀 ~ file: index.ts:54 ~ test ~ user2Counter:', finalVal.rows[0])
+  //   await client1.query(`Commit`)
+}
+
+const resetTable = async () => {
+  const client = new Client({
+    connectionString: 'postgresql://postgres:postgres@localhost:54322/postgres',
+  })
+  await client.connect()
+  await client.query(`
+  CREATE TABLE IF NOT EXISTS counters (
+  id SERIAL PRIMARY KEY,
+  value INTEGER NOT NULL
+  )
+`)
+
+  await client.query(`
+          DELETE from counters 
+      `)
+
+  await client.query(`
+INSERT INTO counters (id, value) VALUES (1, 0)        
+`) // idempotent
+
+  await client.end()
 }
 
 test()
