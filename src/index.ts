@@ -6,6 +6,7 @@ const runUser1 = async () => {
   })
   await client.connect()
 
+  // await client.query(`Begin`) uncomment this line to see the error go away
   await client.query(`
   UPDATE counters SET value = value + 1 where id = '1'
   `)
