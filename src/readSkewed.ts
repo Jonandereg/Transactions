@@ -11,6 +11,8 @@ const test = async () => {
     connectionString: 'postgresql://postgres:postgres@localhost:54322/postgres',
   })
   await transfer.connect()
+  await alice.query(`Begin`)
+  await transfer.query(`Begin`)
   const balance = 500
 
   const account1Val = (
@@ -27,13 +29,14 @@ const test = async () => {
   await transfer.query(`
               UPDATE balance SET value = ${balance - 100} where id = '2'
               `)
+  await transfer.query(`Commit`)
   const account2Val = (
     await alice.query(`
         SELECT value from balance where id = '2'
           `)
   ).rows[0].value
   console.log('🚀 ~ file: readSkew.ts:34 ~ test ~ account2Val:', account2Val)
-
+  await alice.query(`Commit`)
   console.log(
     '🚀 ~ file: index.ts:54 ~ test ~ user2Counter:',
     account2Val + account1Val
