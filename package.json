@@ -16,6 +16,7 @@
   "scripts": {
     "createTable": "node ./src/createTable.js",
     "dirtyWrite": "npx supabase start && nodemon ./src/dirtyWrite.ts",
+    "explicitLock": "npx supabase start && nodemon ./src/explicitLock.ts",
     "readSkewed": "npx supabase start && nodemon ./src/readSkewed.ts",
     "start": "npx supabase start && nodemon ./src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
