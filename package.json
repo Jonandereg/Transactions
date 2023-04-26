@@ -15,6 +15,7 @@
   "main": "index.ts",
   "scripts": {
     "createTable": "node ./src/createTable.js",
+    "readSkewed": "npx supabase start && nodemon ./src/readSkewed.ts",
     "start": "npx supabase start && nodemon ./src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
